@@ -1,0 +1,77 @@
+queue_rules:
+  - name: default
+    conditions:
+      - check-success=build
+      - check-success=coverage
+      - check-success=sonar
+      - check-success=trivy
+
+pull_request_rules:
+  # Auto-merge Renovate PRs with successful CI and approval
+  - name: Auto-merge Renovate PRs
+    conditions:
+      - author=renovate[bot]
+      - check-success=build
+      - check-success=coverage
+      - check-success=sonar
+      - check-success=trivy
+      - label=dependencies
+      - "#approved-reviews-by>=1"
+    actions:
+      queue:
+        name: default
+        method: squash
+        commit_message_template: |
+          {{ title }} (#{{ number }})
+          
+          {{ body }}
+
+  # Auto-merge patch/minor dependency updates without approval
+  - name: Auto-merge minor/patch dependencies
+    conditions:
+      - author=renovate[bot]
+      - check-success=build
+      - check-success=coverage
+      - check-success=sonar
+      - check-success=trivy
+      - label=dependencies
+      - title~=^(fix|chore)\(deps\)
+      - -title~=major
+    actions:
+      queue:
+        name: default
+        method: squash
+        commit_message_template: |
+          {{ title }} (#{{ number }})
+
+  # Require approvals for regular PRs
+  - name: Queue regular PRs
+    conditions:
+      - "#approved-reviews-by>=1"
+      - check-success=build
+      - check-success=coverage
+      - check-success=sonar
+      - check-success=trivy
+      - base=main
+    actions:
+      queue:
+        name: default
+        method: squash
+
+  # Auto-rebase PRs when base changes
+  - name: Auto-rebase on base change
+    conditions:
+      - base=main
+      - -draft
+    actions:
+      rebase:
+
+# Example backport rule (commented out)
+# - name: Backport to release branch
+#   conditions:
+#     - merged
+#     - label=backport-v1.x
+#   actions:
+#     backport:
+#       branches:
+#         - release/v1.x

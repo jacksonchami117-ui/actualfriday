@@ -1,0 +1,74 @@
+# Auto-labeling configuration
+# Labels PRs based on files changed
+
+documentation:
+  - "*.md"
+  - "docs/**/*"
+  - ".github/**/*.md"
+
+tests:
+  - "**/*test*/**"
+  - "**/*spec*/**"
+  - "**/tests/**"
+  - "**/__tests__/**"
+  - "**/*.test.*"
+  - "**/*.spec.*"
+
+ci:
+  - ".github/workflows/**"
+  - ".github/actions/**"
+  - "**/.github/**"
+  - ".mergify.yml"
+  - ".codecov.yml"
+  - "codecov.yml"
+
+dependencies:
+  - "package.json"
+  - "package-lock.json"
+  - "yarn.lock"
+  - "requirements.txt"
+  - "requirements*.txt"
+  - "Pipfile"
+  - "pyproject.toml"
+  - "setup.py"
+  - "go.mod"
+  - "go.sum"
+  - "Cargo.toml"
+  - "Cargo.lock"
+
+config:
+  - "*.config.*"
+  - "*.json"
+  - "*.yml"
+  - "*.yaml"
+  - "*.toml"
+  - ".env*"
+  - "tsconfig.json"
+  - "eslint*"
+  - "prettier*"
+  - ".gitignore"
+
+frontend:
+  - "**/*.js"
+  - "**/*.jsx"
+  - "**/*.ts"
+  - "**/*.tsx"
+  - "**/*.vue"
+  - "**/*.html"
+  - "**/*.css"
+  - "**/*.scss"
+  - "**/*.sass"
+
+backend:
+  - "**/*.py"
+  - "**/*.java"
+  - "**/*.go"
+  - "**/*.rs"
+  - "**/*.rb"
+  - "**/*.php"
+
+docker:
+  - "Dockerfile*"
+  - "docker-compose*.yml"
+  - "docker-compose*.yaml"
+  - ".dockerignore"
